@@ -1,24 +1,19 @@
-import yt_dlp
+from functions import download_song, download_playlist
 
+def main():
+    print("Welcome to YouTube Audio Downloader.")
+    print("1. Download a single song")
+    print("2. Download a playlist")
+    choice = input("Choose an option (1 or 2): ")
 
-def download_audio_with_ytdlp(video_url):
-    ydl_opts = {
-        'format': 'bestaudio/best',  # Descarga solo el mejor audio disponible
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',  # Usa FFmpeg para extraer el audio
-            'preferredcodec': 'mp3',      # Convertir el archivo a MP3
-            'preferredquality': '192',    # Calidad de audio en kbps
-        }],
-        'outtmpl': '/mnt/c/Users/msant/Downloads/%(title)s.%(ext)s',  # Ruta de guardado
-    }
-
-    try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([video_url])
-        print("Audio descargado y convertido a MP3 exitosamente.")
-    except Exception as e:
-        print(f"Error durante la descarga o conversión: {e}")
+    if choice == '1':
+        song_url = input("Enter the YouTube song URL: ")
+        download_song(song_url)
+    elif choice == '2':
+        playlist_url = input("Enter the YouTube playlist URL: ")
+        download_playlist(playlist_url)
+    else:
+        print("Invalid option. Please choose 1 or 2.")
 
 if __name__ == "__main__":
-    video_url = input("Introduce la URL del video de YouTube: ")
-    download_audio_with_ytdlp(video_url)
+    main()
